@@ -26,7 +26,6 @@
 //!
 //! ## Features
 //! * "blas"
-//! * "sqlite"
 //!
 //! ## Getting started
 //!
@@ -151,8 +150,6 @@
 //! ## Backends
 //! The [LSH struct](struct.LSH.html) is exposed with multiple backends that store the hashes.
 //! * in memory (fastest / can save state with serialization) [LshMem](type.LshMem.html)
-//! * SQLite (slower due to disk io, but automatic state preservation between sessions) [LshSql](type.LshSql.html)
-//! * in memory SQLite (can backup to SQLite when processing is done) [LshSqlMem](type.LshSqlMem.html)
 //!
 //! ## Hash primitives
 //! The hashers in this crate will produces hashes of type `Vec<T>`. Where `T` should be one of `i8`,
@@ -220,8 +217,6 @@ mod multi_probe;
 mod table {
     pub mod general;
     pub mod mem;
-    pub mod sqlite;
-    pub mod sqlite_mem;
 }
 mod constants;
 mod error;
@@ -233,8 +228,6 @@ mod utils;
 pub use hash::VecHash;
 pub use multi_probe::{QueryDirectedProbe, StepWiseProbe};
 pub use table::{general::HashTables, mem::MemoryTable};
-#[cfg(feature = "sqlite")]
-pub use table::{sqlite::SqlTable, sqlite_mem::SqlTableMem};
 pub mod data;
 pub mod prelude;
 pub mod stats;

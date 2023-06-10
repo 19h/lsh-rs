@@ -13,9 +13,6 @@ pub enum Error {
     #[error(transparent)]
     SerializationFailed(#[from] std::boxed::Box<bincode::ErrorKind>),
     #[error(transparent)]
-    #[cfg(feature = "sqlite")]
-    SqlFailure(#[from] rusqlite::Error),
-    #[error(transparent)]
     Other(#[from] anyhow::Error),
     #[error(transparent)]
     Io(#[from] std::io::Error),

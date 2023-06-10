@@ -335,7 +335,7 @@ macro_rules! impl_query_directed_probe {
                 // < this point = -1
                 let switchpoint = xi_min.len();
 
-                let distances: Vec<N> = stack!(Axis(0), xi_min, xi_plus).to_vec();
+                let distances: Vec<N> = stack!(Axis(0), xi_min, xi_plus).into_raw_vec();
 
                 // indexes of the least scores to the highest
                 // all below is an argsort

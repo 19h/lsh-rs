@@ -52,31 +52,3 @@ fn test_serialization() {
     assert!(res.is_ok());
     println!("{:?}", lsh.hash_tables)
 }
-
-#[test]
-#[cfg(feature = "sqlite")]
-fn test_db() {
-    let v1 = &[2., 3., 4.];
-    {
-        let mut lsh = hi8::LshSql::new(5, 2, 3).seed(2).srp().unwrap();
-        lsh.store_vec(v1).unwrap();
-        assert!(lsh.query_bucket_ids(v1).unwrap().contains(&0));
-        lsh.commit().unwrap();
-        lsh.describe().unwrap();
-    }
-
-    // tests if the same db is reused.
-    let lsh2 = hi8::LshSql::new(5, 2, 3).srp().unwrap();
-    lsh2.describe().unwrap();
-    assert!(lsh2.query_bucket_ids(v1).unwrap().contains(&0));
-}
-
-#[test]
-#[cfg(feature = "sqlite")]
-fn test_mem_db() {
-    let v1 = &[2., 3., 4.];
-    let mut lsh = hi8::LshSqlMem::new(5, 2, 3).seed(2).srp().unwrap();
-    lsh.store_vec(v1).unwrap();
-    assert!(lsh.query_bucket_ids(v1).unwrap().contains(&0));
-    lsh.describe().unwrap();
-}

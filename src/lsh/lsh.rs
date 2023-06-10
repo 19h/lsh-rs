@@ -79,7 +79,7 @@ fn lsh_from_lsh<
     let hashers = match ht.store_hashers(&hashers) {
         Ok(_) => hashers,
         Err(_) => match ht.load_hashers() {
-            Err(e) => panic!(format!("could not load hashers: {}", e)),
+            Err(e) => panic!("could not load hashers: {}", e),
             Ok(hashers) => hashers,
         },
     };
@@ -559,28 +559,6 @@ where
             }
             Err(e) => Err(e),
         }
-    }
-}
-
-#[cfg(feature = "sqlite")]
-impl<N, H, K> LSH<H, N, SqlTable<N, K>, K>
-where
-    N: Numeric,
-    H: VecHash<N, K> + Serialize,
-    K: Integer,
-{
-    /// Commit SqlTable backend
-    pub fn commit(&mut self) -> Result<()> {
-        let ht = self.hash_tables.as_mut().unwrap();
-        ht.commit()?;
-        Ok(())
-    }
-
-    /// Init transaction of SqlTable backend.
-    pub fn init_transaction(&mut self) -> Result<()> {
-        let ht = self.hash_tables.as_mut().unwrap();
-        ht.init_transaction()?;
-        Ok(())
     }
 }
 
